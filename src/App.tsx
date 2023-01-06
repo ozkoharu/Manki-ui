@@ -1,24 +1,22 @@
+import { LatLng } from 'leaflet';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { MapContainer, TileLayer } from 'react-leaflet';
+import './styles/App.css';
+import 'leaflet/dist/leaflet.css';
 
+const position = new LatLng(38.72311671577611, 141.0346841825174);
+const zoomlabel = 18
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MapContainer center={position} zoom={zoomlabel} doubleClickZoom={false} >
+        <TileLayer
+            attribution='&copy; <a href="http://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a> contributors'
+            url="https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png"
+            maxZoom={21}
+            maxNativeZoom={18}
+        />
+      </MapContainer>
     </div>
   );
 }
