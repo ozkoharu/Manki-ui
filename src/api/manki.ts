@@ -34,6 +34,7 @@ export async function createUser() {
 /**
  * ユーザの手続きを終了する。
  *
+ * @param userId ユーザ識別子
  * @return 成功したときは true、
  *         さもなければ UI に表示できるメッセージを含むエラーインスタンス
  */
