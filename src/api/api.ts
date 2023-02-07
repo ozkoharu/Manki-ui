@@ -443,3 +443,36 @@ export async function loginAdmin(args: ApiTypes.LoginAdminArg) {
     );
     return await res.json() as ApiTypes.LoginAdminResult;
 }
+
+/**
+ * terminateAdmin に渡すパラメータの内容を格納する型
+ */
+interface TerminateAdminQuery {
+    /** 管理者識別子 */
+    adminId: ApiTypes.AdminId,
+}
+
+/**
+ * 管理者の識別子を無効にする。
+ *
+ * @param adminId 管理者識別子
+ * @return terminateAdmin API の戻り値
+ * @throws Fetch API に由来する例外
+ */
+export async function terminateAdmin(adminId: ApiTypes.AdminId) {
+    const API_PATH = '/terminateAdmin';
+    const query: TerminateAdminQuery = {
+        adminId,
+    };
+    const res = await fetch(
+        API_SERVER + API_PATH,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body: JSON.stringify(query),
+        },
+    );
+    return await res.json() as ApiTypes.TerminateAdminResult;
+}
