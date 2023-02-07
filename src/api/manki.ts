@@ -499,3 +499,34 @@ export async function terminateAdmin(adminId: Api.AdminId) {
         return new Error('API サーバとの通信に失敗しました。');
     }
 }
+
+/**
+ * 管理者のパスワードを変更する。
+ *
+ * @param adminId 管理者識別子
+ * @param curPasswd 現在のパスワード
+ * @param newPasswd 新しいパスワード
+ * @return 成功したときは true、
+ *         さもなければ UI に表示できるメッセージを含むエラーインスタンス
+ */
+export async function changePasswd(adminId: Api.AdminId, curPasswd: string, newPasswd: string) {
+    try {
+        const result = await Api.changePasswd(adminId,
+            { currentPasswd: curPasswd, newPasswd: newPasswd } as Api.ChangePasswdArg);
+        if (!result.succeeded)
+            switch (result.reason) {
+                case 'Invalid request.':
+                    return new Error('不正なリクエストです。');
+                case 'No such administrator exists.':
+                    return new Error('管理者識別子は有効ではありません。');
+                case 'Your password is wrong.':
+                    return new Error('管理者パスワードが間違っています。');
+                default:
+                    return new Error('API の呼び出しに失敗しました。');
+            }
+        return true;
+    } catch (err) {
+        console.error('terminateAdmin:', err);
+        return new Error('API サーバとの通信に失敗しました。');
+    }
+}

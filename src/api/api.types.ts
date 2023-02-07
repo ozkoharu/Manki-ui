@@ -242,3 +242,20 @@ export interface LoginAdminResult extends ApiResult {
 export interface TerminateAdminResult extends ApiResult {
   /* Nothing yet */
 }
+
+/**
+ * changePasswd に渡すパラメータの型
+ */
+export interface ChangePasswdArg {
+  /** 現在の管理者パスワード */
+  currentPasswd: string;
+  /** 新しい管理者パスワード */
+  newPasswd: string;
+}
+
+/**
+ * changePasswd の戻り値の型
+ */
+export interface ChangePasswdResult extends ApiResult {
+  /* Nothing yet */
+}
