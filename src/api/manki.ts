@@ -602,3 +602,33 @@ export async function setPassableAdmin(adminId: Api.AdminId, passable: Api.Passa
         return new Error('API サーバとの通信に失敗しました。');
     }
 }
+
+/**
+ * 車状態を変更する。
+ * もとい、異常状態になった車を成仏させる。
+ *
+ * @param adminId 管理者識別子
+ * @param carId 成仏させる車両の車両識別子
+ * @return 成功したときは true、
+ *         さもなければ UI に表示できるメッセージを含むエラーインスタンス
+ */
+export async function manageCar(adminId: Api.AdminId, carId: Api.CarId) {
+    try {
+        const result = await Api.manageCar(adminId, { carId });
+        if (!result.succeeded)
+            switch (result.reason) {
+                case 'Invalid request.':
+                    return new Error('不正な API リクエストが発生しました。');
+                case 'Illegal admin.':
+                    return new Error('管理者識別子は有効ではありません。');
+                case 'No such car exists.':
+                    return new Error('指定された車両は存在しません。');
+                default:
+                    return new Error('API の呼び出しに失敗しました。');
+            }
+        return true;
+    } catch (err) {
+        console.error('manageCar:', err);
+        return new Error('API サーバとの通信に失敗しました。');
+    }
+}
