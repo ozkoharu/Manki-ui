@@ -585,3 +585,40 @@ export async function delPassable(adminId: ApiTypes.AdminId, args: ApiTypes.DelP
     );
     return await res.json() as ApiTypes.DelPassableResult;
 }
+
+/**
+ * addPassable に渡すパラメータの内容を格納する型
+ */
+interface AddPassableQuery {
+    /** 管理者識別子 */
+    adminId: ApiTypes.AdminId,
+    /** 追加する通行可能領域情報 */
+    passPoints: ApiTypes.PassablePoint[];
+}
+
+/**
+ * 通行可能領域を追加する。
+ *
+ * @param adminId 管理者識別子
+ * @param args その他の引数
+ * @return addPassable API の戻り値
+ * @throws Fetch API に由来する例外
+ */
+export async function addPassable(adminId: ApiTypes.AdminId, args: ApiTypes.AddPassableArg) {
+    const API_PATH = '/addPassable';
+    const query: AddPassableQuery = {
+        adminId,
+        ...args,
+    };
+    const res = await fetch(
+        API_SERVER + API_PATH,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body: JSON.stringify(query),
+        },
+    );
+    return await res.json() as ApiTypes.AddPassableResult;
+}

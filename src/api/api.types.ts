@@ -288,3 +288,18 @@ export interface DelPassableArg {
 export interface DelPassableResult extends ApiResult {
   /* Nothing yet */
 }
+
+/**
+ * addPassable に渡すパラメータの型
+ */
+export interface AddPassableArg {
+  /** 追加する通行可能領域情報 */
+  passPoints: PassablePoint[];
+}
+
+/**
+ * addPassable の戻り値の型
+ */
+export interface AddPassableResult extends ApiResult {
+  /* Nothing yet */
+}
