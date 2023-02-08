@@ -548,3 +548,40 @@ export async function reqPassAdmin(adminId: ApiTypes.AdminId) {
     );
     return await res.json() as ApiTypes.ReqPassAdminResult;
 }
+
+/**
+ * delPassable に渡すパラメータの内容を格納する型
+ */
+interface DelPassableQuery {
+    /** 管理者識別子 */
+    adminId: ApiTypes.AdminId,
+    /** 削除する通行可能領域の識別番号 */
+    passId: number[],
+}
+
+/**
+ * 通行可能領域情報を削除する。
+ *
+ * @param adminId 管理者識別子
+ * @param args その他の引数
+ * @return delPassable API の戻り値
+ * @throws Fetch API に由来する例外
+ */
+export async function delPassable(adminId: ApiTypes.AdminId, args: ApiTypes.DelPassableArg) {
+    const API_PATH = '/delPassable';
+    const query: DelPassableQuery = {
+        adminId,
+        ...args,
+    };
+    const res = await fetch(
+        API_SERVER + API_PATH,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body: JSON.stringify(query),
+        },
+    );
+    return await res.json() as ApiTypes.DelPassableResult;
+}
