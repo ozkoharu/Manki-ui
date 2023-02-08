@@ -556,3 +556,49 @@ export async function getPassableAdmin(adminId: Api.AdminId) {
         return new Error('API サーバとの通信に失敗しました。');
     }
 }
+
+/**
+ * 通行可能領域を設定する。
+ * XXX: エラーが発生した場合、削除と追加のいづれか一方しか行われない恐れがある。
+ *
+ * @param adminId 管理者識別子
+ * @param passable 通行可能領域情報の配列
+ *                 ただし、新しく追加される通行可能領域の識別子は無効な値であるべき
+ * @return 成功したときは true、
+ *         さもなければ UI に表示できるメッセージを含むエラーインスタンス
+ */
+export async function setPassableAdmin(adminId: Api.AdminId, passable: Api.PassableInfo[]) {
+    /* 現在の通行可能領域を取得する */
+    const current = await getPassableAdmin(adminId);
+    if (current instanceof Error)
+        return current;
+    /* 差分の計算 */
+    const deletion = current.filter(
+        /* current の中にある passable に含まれない点は削除すべき */
+        point => passable.findIndex(cur => cur.passableId === point.passableId) === -1
+    );
+    const addition = passable.filter(
+        /* passable の中にある current に含まれない点は追加すべき */
+        point => current.findIndex(cur => cur.passableId === point.passableId) === -1
+    );
+    /* それぞれ適用する */
+    try {
+        const delPromise = Api.delPassable(adminId, { passId: deletion.map(e => e.passableId) });
+        const addPromise = Api.addPassable(adminId, { passPoints: addition });
+        const delResult = await delPromise;
+        const addResult = await addPromise;
+        if (!delResult.succeeded || !addResult.succeeded)
+            switch (delResult.reason || addResult.reason) {
+                case 'Invalid request.':
+                    return new Error('不正な API リクエストが発生しました。');
+                case 'Illegal admin.':
+                    return new Error('管理者識別子は有効ではありません。');
+                default:
+                    return new Error('API の呼び出しに失敗しました。');
+            }
+        return true;
+    } catch (err) {
+        console.error('setPassableAdmin:', err);
+        return new Error('API サーバとの通信に失敗しました。');
+    }
+}
