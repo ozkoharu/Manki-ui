@@ -267,3 +267,18 @@ export interface ReqPassAdminResult extends ApiResult {
   /** 通行可能領域情報のリスト */
   passableInfo?: PassableInfo[];
 }
+
+/**
+ * delPassable に渡すパラメータの型
+ */
+export interface DelPassableArg {
+  /** 削除する通行可能領域の識別番号 */
+  passId: number[];
+}
+
+/**
+ * delPassable の戻り値の型
+ */
+export interface DelPassableResult extends ApiResult {
+  /* Nothing yet */
+}
