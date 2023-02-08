@@ -259,3 +259,11 @@ export interface ChangePasswdArg {
 export interface ChangePasswdResult extends ApiResult {
   /* Nothing yet */
 }
+
+/**
+ * reqPassAdmin の戻り値の型
+ */
+export interface ReqPassAdminResult extends ApiResult {
+  /** 通行可能領域情報のリスト */
+  passableInfo?: PassableInfo[];
+}

@@ -515,3 +515,36 @@ export async function changePasswd(adminId: ApiTypes.AdminId, args: ApiTypes.Cha
     );
     return await res.json() as ApiTypes.ChangePasswdResult;
 }
+
+/**
+ * reqPassAdmin に渡すパラメータの内容を格納する型
+ */
+interface ReqPassAdminQuery {
+    /** 管理者識別子 */
+    adminId: ApiTypes.AdminId,
+}
+
+/**
+ * 通行可能領域情報を取得する。
+ *
+ * @param adminId 管理者識別子
+ * @return reqPassAdmin API の戻り値
+ * @throws Fetch API に由来する例外
+ */
+export async function reqPassAdmin(adminId: ApiTypes.AdminId) {
+    const API_PATH = '/reqPassAdmin';
+    const query: ReqPassAdminQuery = {
+        adminId,
+    };
+    const res = await fetch(
+        API_SERVER + API_PATH,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body: JSON.stringify(query),
+        },
+    );
+    return await res.json() as ApiTypes.ReqPassAdminResult;
+}
