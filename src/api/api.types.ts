@@ -120,13 +120,19 @@ export interface ReqRouteResult extends ApiResult {
 }
 
 /**
- * 通行可能領域のそれぞれの円を表す型
+ * 通行可能領域のそれぞれの円を現す型
  */
-export interface PassableInfo {
+export interface PassablePoint {
   /** 通行可能領域の中央座標 */
-  position: Position; // XXX: 文書と実装の齟齬（実装に沿う）
+  position: Position;
   /** 通行可能領域の半径 */
   radius: number;
+}  
+
+/**
+ * 通行可能領域情報を表す型
+ */
+export interface PassableInfo extends PassablePoint {
   /** 通行可能領域の識別子 */
   passableId: number;
 }
