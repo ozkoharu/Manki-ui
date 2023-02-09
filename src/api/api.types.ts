@@ -26,11 +26,6 @@ export type UserId = GeneralId;
 export type AdminId = GeneralId;
 
 /**
- * 車両識別子の型
- */
-export type CarId = GeneralId;
-
-/**
  * createUser の戻り値の型
  */
 export interface CreateUserResult extends ApiResult {
@@ -306,20 +301,5 @@ export interface AddPassableArg {
  * addPassable の戻り値の型
  */
 export interface AddPassableResult extends ApiResult {
-  /* Nothing yet */
-}
-
-/**
- * manageCar に渡すパラメータの型
- */
-export interface ManageCarArg {
-  /** 車両識別子 */
-  carId: CarId;
-}
-
-/**
- * manageCar の戻り値の型
- */
-export interface ManageCarResult extends ApiResult {
   /* Nothing yet */
 }
