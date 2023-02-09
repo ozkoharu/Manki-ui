@@ -408,38 +408,3 @@ export async function monitorCar(userId: ApiTypes.UserId) {
     );
     return await res.json() as ApiTypes.MonitorCarResult;
 }
-
-/**
- * loginAdmin に渡すパラメータの内容を格納する型
- */
-interface LoginAdminQuery {
-    /** 管理者の名前 */
-    adminName: string;
-    /** 管理者のパスワード */
-    adminPass: string;
-}
-
-/**
- * 管理者識別子を発行する。
- *
- * @param args その他の引数
- * @return loginAdmin API の戻り値
- * @throws Fetch API に由来する例外
- */
-export async function loginAdmin(args: ApiTypes.LoginAdminArg) {
-    const API_PATH = '/loadinAdmin';
-    const query: LoginAdminQuery = {
-        ...args,
-    };
-    const res = await fetch(
-        API_SERVER + API_PATH,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-            },
-            body: JSON.stringify(query),
-        },
-    );
-    return await res.json() as ApiTypes.LoginAdminResult;
-}

@@ -2,7 +2,7 @@
 
 import * as Api from './api';
 
-export type { UserId, AdminId } from './api';
+export type { UserId } from './api';
 
 /**
  * 新しいユーザ識別子を発行する。
@@ -440,36 +440,6 @@ export async function carStat(userId: Api.UserId) {
         return ret;
     } catch (err) {
         console.error('carStat:', err);
-        return new Error('API サーバとの通信に失敗しました。');
-    }
-}
-
-/**
- * 管理者識別子を発行する。
- *
- * @param name 管理者の名前
- * @param passwd 管理者のパスワード
- * @return 成功したときは管理者識別子、
- *         さもなければ UI に表示できるメッセージを含むエラーインスタンス
- */
-export async function loginAdmin(name: string, passwd: string) {
-    try {
-        const result = await Api.loginAdmin(
-            { adminName: name,  adminPass: passwd } as Api.LoginAdminArg);
-        if (!result.succeeded)
-            switch (result.reason) {
-                case 'Invalid request.':
-                    return new Error('不正な API リクエストが発生しました。');
-                case 'Your name is wrong.':
-                    return new Error('管理者名が間違っています。');
-                case 'Your password is wrong.':
-                    return new Error('管理者パスワードが間違っています。');
-                default:
-                    return new Error('API の呼び出しに失敗しました。');
-            }
-        return result.adminId as Api.AdminId;
-    } catch (err) {
-        console.error('loginAdmin:', err);
         return new Error('API サーバとの通信に失敗しました。');
     }
 }
