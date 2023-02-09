@@ -473,29 +473,3 @@ export async function loginAdmin(name: string, passwd: string) {
         return new Error('API サーバとの通信に失敗しました。');
     }
 }
-
-/**
- * 管理者の識別子を無効にする。
- *
- * @param adminId 管理者識別子
- * @return 成功したときは true、
- *         さもなければ UI に表示できるメッセージを含むエラーインスタンス
- */
-export async function terminateAdmin(adminId: Api.AdminId) {
-    try {
-        const result = await Api.terminateAdmin(adminId);
-        if (!result.succeeded)
-            switch (result.reason) {
-                case 'Invalid request.':
-                    return new Error('不正なリクエストです。');
-                case 'Illegal admin.':
-                    return new Error('管理者識別子は有効ではありません。');
-                default:
-                    return new Error('API の呼び出しに失敗しました。');
-            }
-        return true;
-    } catch (err) {
-        console.error('terminateAdmin:', err);
-        return new Error('API サーバとの通信に失敗しました。');
-    }
-}
