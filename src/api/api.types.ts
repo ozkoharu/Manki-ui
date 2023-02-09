@@ -21,11 +21,6 @@ type GeneralId = string;
 export type UserId = GeneralId;
 
 /**
- * 管理者識別子の型
- */
-export type AdminId = GeneralId;
-
-/**
  * createUser の戻り値の型
  */
 export interface CreateUserResult extends ApiResult {
@@ -216,22 +211,4 @@ export interface MonitorCarResult extends ApiResult {
   nowPoint?: Position;
   /** 車のバッテリ残量 */
   battery?: number;
-}
-
-/**
- * loginAdmin に渡すパラメータの型
- */
-export interface LoginAdminArg {
-  /** 管理者の名前 */
-  adminName: string;
-  /** 管理者のパスワード */
-  adminPass: string;
-}
-
-/**
- * loginAdmin の戻り値の型
- */
-export interface LoginAdminResult extends ApiResult {
-  /** 管理者識別子 */
-  adminId?: AdminId;
 }
