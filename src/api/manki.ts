@@ -530,29 +530,3 @@ export async function changePasswd(adminId: Api.AdminId, curPasswd: string, newP
         return new Error('API サーバとの通信に失敗しました。');
     }
 }
-
-/**
- * 通行可能領域を取得する。
- *
- * @param adminId 管理者識別子
- * @return 成功したときは通行可能領域情報の配列、
- *         さもなければ UI に表示できるメッセージを含むエラーインスタンス
- */
-export async function getPassableAdmin(adminId: Api.AdminId) {
-    try {
-        const result = await Api.reqPassAdmin(adminId);
-        if (!result.succeeded)
-            switch (result.reason) {
-                case 'Invalid request.':
-                    return new Error('不正な API リクエストが発生しました。');
-                case 'Illegal admin.':
-                    return new Error('管理者識別子は有効ではありません。');
-                default:
-                    return new Error('API の呼び出しに失敗しました。');
-            }
-        return result.passableInfo as Api.PassableInfo[];
-    } catch (err) {
-        console.error('getPassableAdmin:', err);
-        return new Error('API サーバとの通信に失敗しました。');
-    }
-}
