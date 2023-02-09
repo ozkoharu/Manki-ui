@@ -659,36 +659,3 @@ export async function manageCar(adminId: ApiTypes.AdminId, args: ApiTypes.Manage
     );
     return await res.json() as ApiTypes.ManageCarResult;
 }
-
-/**
- * reqCarInfo に渡すパラメータの内容を格納する型
- */
-interface ReqCarInfoQuery {
-    /** 管理者識別子 */
-    adminId: ApiTypes.AdminId,
-}
-
-/**
- * 車情報を取得する。
- *
- * @param adminId 管理者識別子
- * @return reqCarInfo API の戻り値
- * @throws Fetch API に由来する例外
- */
-export async function reqCarInfo(adminId: ApiTypes.AdminId) {
-    const API_PATH = '/reqCarInfo';
-    const query: ReqCarInfoQuery = {
-        adminId,
-    };
-    const res = await fetch(
-        API_SERVER + API_PATH,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-            },
-            body: JSON.stringify(query),
-        },
-    );
-    return await res.json() as ApiTypes.ReqCarInfoResult;
-}

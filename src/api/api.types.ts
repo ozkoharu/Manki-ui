@@ -323,27 +323,3 @@ export interface ManageCarArg {
 export interface ManageCarResult extends ApiResult {
   /* Nothing yet */
 }
-
-/**
- * 車情報を表す型
- */
-export interface CarInfo {
-  /** 車両識別子 */
-  carId: CarId;
-  /** 車の状態 */
-  status: number;
-  /** 現在位置 */
-  nowPoint: Position;
-  /** バッテリ残量 [%] */
-  battery: number;
-  /** 最終通信時刻 */
-  lastAt: string;
-}
-
-/**
- * reqCarInfo の戻り値の型
- */
-export interface ReqCarInfoResult extends ApiResult {
-  /** 車情報 */
-  carInformations?: CarInfo[];
-}
