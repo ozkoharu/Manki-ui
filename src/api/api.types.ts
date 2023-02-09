@@ -235,10 +235,3 @@ export interface LoginAdminResult extends ApiResult {
   /** 管理者識別子 */
   adminId?: AdminId;
 }
-
-/**
- * terminateAdmin の戻り値の型
- */
-export interface TerminateAdminResult extends ApiResult {
-  /* Nothing yet */
-}
